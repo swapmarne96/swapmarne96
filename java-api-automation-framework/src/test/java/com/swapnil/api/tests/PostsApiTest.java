@@ -1,10 +1,12 @@
 package com.swapnil.api.tests;
 
 import com.swapnil.api.base.BaseTest;
+import com.swapnil.api.constants.ApiEndpoints;
 import io.restassured.http.ContentType;
 import org.testng.annotations.Test;
 
 import static io.restassured.RestAssured.given;
+import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
 import static org.hamcrest.Matchers.*;
 
 public class PostsApiTest extends BaseTest {
@@ -12,9 +14,9 @@ public class PostsApiTest extends BaseTest {
     @Test(description = "GET an existing post and validate its key fields")
     public void shouldGetPostById() {
         given()
-                .accept(ContentType.JSON)
+                .spec(requestSpec)
         .when()
-                .get("/posts/1")
+                .get(ApiEndpoints.POST_BY_ID)
         .then()
                 .statusCode(200)
                 .contentType(ContentType.JSON)
@@ -27,15 +29,15 @@ public class PostsApiTest extends BaseTest {
     @Test(description = "Validate the post response against its JSON schema")
     public void shouldMatchPostJsonSchema() {
         given()
-                .accept(ContentType.JSON)
+                .spec(requestSpec)
         .when()
-                .get("/posts/1")
+                .get(ApiEndpoints.POST_BY_ID)
         .then()
                 .statusCode(200)
                 .body(matchesJsonSchemaInClasspath("schemas/post-schema.json"));
     }
 
-    @Test(description = "POST a new post")
+    @Test(description = "POST a new post and validate the created representation")
     public void shouldCreatePost() {
         String requestBody = """
                 {
@@ -46,18 +48,19 @@ public class PostsApiTest extends BaseTest {
                 """;
 
         given()
-                .contentType(ContentType.JSON)
+                .spec(requestSpec)
                 .body(requestBody)
         .when()
-                .post("/posts")
+                .post(ApiEndpoints.POSTS)
         .then()
                 .statusCode(201)
+                .contentType(ContentType.JSON)
                 .body("title", equalTo("API automation test"))
                 .body("userId", equalTo(1))
                 .body("id", notNullValue());
     }
 
-    @Test(description = "PUT an existing post")
+    @Test(description = "PUT an existing post and validate the updated representation")
     public void shouldUpdatePost() {
         String requestBody = """
                 {
@@ -69,10 +72,10 @@ public class PostsApiTest extends BaseTest {
                 """;
 
         given()
-                .contentType(ContentType.JSON)
+                .spec(requestSpec)
                 .body(requestBody)
         .when()
-                .put("/posts/1")
+                .put(ApiEndpoints.POST_BY_ID)
         .then()
                 .statusCode(200)
                 .body("id", equalTo(1))
@@ -82,8 +85,9 @@ public class PostsApiTest extends BaseTest {
     @Test(description = "DELETE an existing post")
     public void shouldDeletePost() {
         given()
+                .spec(requestSpec)
         .when()
-                .delete("/posts/1")
+                .delete(ApiEndpoints.POST_BY_ID)
         .then()
                 .statusCode(200);
     }
@@ -91,8 +95,9 @@ public class PostsApiTest extends BaseTest {
     @Test(description = "Return 404 for a post that does not exist")
     public void shouldReturnNotFoundForUnknownPost() {
         given()
+                .spec(requestSpec)
         .when()
-                .get("/posts/999999")
+                .get(ApiEndpoints.UNKNOWN_POST)
         .then()
                 .statusCode(404);
     }
