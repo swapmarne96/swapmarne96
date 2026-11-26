@@ -28,7 +28,11 @@ I focus on building maintainable automation solutions, improving test feedback c
 | Data | SQL, database validation |
 | CI/CD & Cloud | Jenkins, GitHub Actions, AWS |
 
-## Featured Project
+## Featured Projects
+
+### [Java API Automation Framework](./java-api-automation-framework/)
+
+Java 17 + REST Assured + TestNG + Maven framework demonstrating reusable request specifications, GET/POST/PUT/DELETE coverage, response assertions, JSON schema validation, and GitHub Actions CI.
 
 ### [Playwright Python QA Framework](./playwright-python-qa-framework/)
 
