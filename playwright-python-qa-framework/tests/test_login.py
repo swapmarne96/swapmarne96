@@ -1,6 +1,5 @@
 import pytest
 
-from config.settings import PASSWORD
 from pages.inventory_page import InventoryPage
 from pages.login_page import LoginPage
 
