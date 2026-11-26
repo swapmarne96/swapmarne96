@@ -54,9 +54,6 @@
                     <suiteXmlFiles>
                         <suiteXmlFile>testng.xml</suiteXmlFile>
                     </suiteXmlFiles>
-                    <systemPropertyVariables>
-                        <baseUrl>${baseUrl}</baseUrl>
-                    </systemPropertyVariables>
                 </configuration>
             </plugin>
         </plugins>
