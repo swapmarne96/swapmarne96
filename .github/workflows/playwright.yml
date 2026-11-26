@@ -1,0 +1,47 @@
+name: Playwright Python Tests
+
+on:
+  push:
+    paths:
+      - "playwright-python-qa-framework/**"
+      - ".github/workflows/playwright.yml"
+  pull_request:
+    paths:
+      - "playwright-python-qa-framework/**"
+      - ".github/workflows/playwright.yml"
+  workflow_dispatch:
+
+jobs:
+  smoke-tests:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: playwright-python-qa-framework
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: "pip"
+          cache-dependency-path: playwright-python-qa-framework/requirements.txt
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+      - name: Install Playwright Chromium
+        run: python -m playwright install --with-deps chromium
+      - name: Run smoke tests
+        run: |
+          mkdir -p reports
+          pytest -m smoke --html=reports/smoke-report.html --self-contained-html
+      - name: Upload test artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-test-artifacts
+          path: |
+            playwright-python-qa-framework/reports/
+            playwright-python-qa-framework/artifacts/
+          if-no-files-found: ignore
