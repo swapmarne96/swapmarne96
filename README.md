@@ -49,7 +49,7 @@ Deepening hands-on practice in Python-based Playwright automation, modern CI wor
 ## Connect
 
 - GitHub: [@swapmarne96](https://github.com/swapmarne96)
-- LinkedIn: [Add your LinkedIn profile URL](https://www.linkedin.com/in/swapnil-marne-33bb2a101/)
+- LinkedIn: [Swapnil Marne Profile](https://www.linkedin.com/in/swapnil-marne-33bb2a101/)
 
 ---
 
