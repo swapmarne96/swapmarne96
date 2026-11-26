@@ -1,0 +1,41 @@
+name: Java API Automation
+
+on:
+  push:
+    paths:
+      - 'java-api-automation-framework/**'
+      - '.github/workflows/java-api-automation.yml'
+  pull_request:
+    paths:
+      - 'java-api-automation-framework/**'
+      - '.github/workflows/java-api-automation.yml'
+  workflow_dispatch:
+
+jobs:
+  api-tests:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: java-api-automation-framework
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Java 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+          cache: maven
+
+      - name: Run API automation tests
+        run: mvn --batch-mode clean test
+
+      - name: Upload TestNG reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: java-api-test-reports
+          path: java-api-automation-framework/target/surefire-reports/
+          if-no-files-found: warn
