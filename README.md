@@ -30,6 +30,11 @@ I focus on building maintainable automation solutions, improving test feedback c
 
 ## Featured Projects
 
+### [Selenium Java UI Automation Framework](https://github.com/swapmarne96/swapmarne96.github.io/tree/main/selenium-java-ui-automation-framework)
+
+Java 17 + Selenium 4 + TestNG + Maven framework demonstrating Page Object Model, thread-local parallel execution, explicit waits, failure screenshots, Allure results, Log4j2 logging, and GitHub Actions CI.
+
+
 ### [Java API Automation Framework](./java-api-automation-framework/)
 
 Java 17 + REST Assured + TestNG + Maven framework demonstrating reusable request specifications, GET/POST/PUT/DELETE coverage, response assertions, JSON schema validation, and GitHub Actions CI.
